@@ -7,7 +7,7 @@ PACKAGE=github.com/moznion/resque_exporter
 REVISION=$(shell git rev-parse --verify HEAD)
 HAVE_GLIDE:=$(shell which glide > /dev/null 2>&1)
 
-.PHONY: clean build build-linux-amd64 build-linux-386 build-darwin-amd64 build-darwin-386 build-windows-amd64 build-windows-386 $(RELEASE_DIR)/resque_exporter_$(GOOS)_$(GOARCH) all
+.PHONY: clean build build-image build-linux-amd64 build-linux-386 build-darwin-amd64 build-darwin-386 build-windows-amd64 build-windows-386 $(RELEASE_DIR)/resque_exporter_$(GOOS)_$(GOARCH) all
 
 all: installdeps clean build-linux-amd64 build-linux-386 build-darwin-amd64 build-darwin-386 build-windows-amd64 build-windows-386
 
@@ -30,6 +30,13 @@ build-windows-amd64:
 
 build-windows-386:
 	@$(MAKE) build GOOS=windows GOARCH=386
+
+image:
+ifndef VERSION
+	@echo '[ERROR] $$VERSION must be specified'
+	exit 255
+endif
+	docker build -t resque_exporter:$(VERSION) --build-arg REVISION=$(REVISION) --build-arg VERSION=$(VERSION) .
 
 $(RELEASE_DIR)/resque_exporter_$(GOOS)_$(GOARCH):
 ifndef VERSION
@@ -55,4 +62,3 @@ installdeps: glide
 
 clean:
 	rm -rf $(RELEASE_DIR)/resque_exporter_*
-

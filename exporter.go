@@ -100,7 +100,7 @@ func (e *exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	if err := e.collect(ch); err != nil {
-		log.Println(err)
+		log.Printf("Collection failure: %v\n", err)
 		e.incrementFailures(ch)
 	}
 
