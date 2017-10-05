@@ -1,5 +1,5 @@
 hash: 9ef33233887000d1c92a3d18f2fad5888b93fad011258a5680f43455a43a4a52
-updated: 2017-06-28T02:18:22.832125438+09:00
+updated: 2017-10-04T16:37:11.109958285-07:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -8,17 +8,17 @@ imports:
 - name: github.com/Bowery/prompt
   version: 14cd60563a0ae24b2902e89a5d7b2b88ad3cd884
 - name: github.com/golang/protobuf
-  version: 6a1fa9404c0aebf36c879bc50152edcc953910d2
+  version: 4bd1920723d7b7c925de087aa32e2187708897f7
   subpackages:
   - proto
 - name: github.com/labstack/gommon
-  version: 1121fd3e243c202482226a7afe4dcd07ffc4139a
+  version: 779b8a8b9850a97acba6a3fe20feb628c39e17c1
   subpackages:
   - color
 - name: github.com/mattn/go-colorable
-  version: 941b50ebc6efddf4c41c8e4537a5f68a4e686b24
+  version: ad5389df28cdac544c99bd7b9161a0b5b6ca9d1b
 - name: github.com/mattn/go-isatty
-  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
+  version: a5cdd64afdee435007ee3e9f6ed4684af949d568
 - name: github.com/matttproud/golang_protobuf_extensions
   version: c12348ce28de40eed0136aa2b644d0ee0650e56c
   subpackages:
@@ -39,17 +39,17 @@ imports:
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: 0866df4b85a18d652b6965be022d007cdf076822
+  version: 2f17f4a9d485bf34b4bfaccc273805040e4f86c8
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
   - model
 - name: github.com/prometheus/procfs
-  version: 822d4a1f8edcbcbc71e8d1fd6527b12331a6d0ad
+  version: e645f4e5aaa8506fc71d6edbc5c4ff02c04c46f2
   subpackages:
   - xfs
 - name: golang.org/x/sys
-  version: 90796e5a05ce440b41c768bd9af257005e470461
+  version: 314a259e304ff91bd6985da2a7149bbf91237993
   subpackages:
   - unix
 - name: gopkg.in/bsm/ratelimit.v1

@@ -2,12 +2,13 @@ package resqueExporter
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"sync"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"gopkg.in/redis.v3"
+	redis "gopkg.in/redis.v3"
 )
 
 const namespace = "resque"
@@ -99,6 +100,7 @@ func (e *exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	if err := e.collect(ch); err != nil {
+		log.Println(err)
 		e.incrementFailures(ch)
 	}
 
