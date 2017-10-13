@@ -14,17 +14,18 @@ import (
 const namespace = "resque"
 
 type exporter struct {
-	config         *Config
-	mut            sync.Mutex
-	scrapeFailures prometheus.Counter
-	processed      prometheus.Gauge
-	failedQueue    prometheus.Gauge
-	failedTotal    prometheus.Gauge
-	queueStatus    *prometheus.GaugeVec
-	totalWorkers   prometheus.Gauge
-	activeWorkers  prometheus.Gauge
-	idleWorkers    prometheus.Gauge
-	timer          *time.Timer
+	config            *Config
+	mut               sync.Mutex
+	scrapeFailures    prometheus.Counter
+	processed         prometheus.Gauge
+	failedQueue       prometheus.Gauge
+	failedTotal       prometheus.Gauge
+	queueStatus       *prometheus.GaugeVec
+	failedQueueStatus *prometheus.GaugeVec
+	totalWorkers      prometheus.Gauge
+	activeWorkers     prometheus.Gauge
+	idleWorkers       prometheus.Gauge
+	timer             *time.Timer
 }
 
 func newExporter(config *Config) (*exporter, error) {
