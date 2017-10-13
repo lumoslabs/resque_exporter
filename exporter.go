@@ -38,6 +38,14 @@ func newExporter(config *Config) (*exporter, error) {
 			},
 			[]string{"queue_name"},
 		),
+		failedQueueStatus: prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Namespace: namespace,
+				Name:      "jobs_in_failed_queue",
+				Help:      "Number of jobs in failed queue",
+			},
+			[]string{"queue_name"},
+		),
 		processed: prometheus.NewGauge(prometheus.GaugeOpts{
 			Namespace: namespace,
 			Name:      "processed",
@@ -81,6 +89,7 @@ func newExporter(config *Config) (*exporter, error) {
 func (e *exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.scrapeFailures.Describe(ch)
 	e.queueStatus.Describe(ch)
+	e.failedQueueStatus.Describe(ch)
 	e.processed.Describe(ch)
 	e.failedQueue.Describe(ch)
 	e.failedTotal.Describe(ch)
@@ -143,6 +152,19 @@ func (e *exporter) collect(ch chan<- prometheus.Metric) error {
 		e.queueStatus.WithLabelValues(q).Set(float64(n))
 	}
 
+	failed_queues, err := redis.SMembers(fmt.Sprintf("%s:failed_queues", resqueNamespace)).Result()
+	if err != nil {
+		return err
+	}
+
+	for _, q := range failed_queues {
+		n, err := redis.LLen(fmt.Sprintf("%s:%s", resqueNamespace, q)).Result()
+		if err != nil {
+			return err
+		}
+		e.failedQueueStatus.WithLabelValues(q).Set(float64(n))
+	}
+
 	processed, err := redis.Get(fmt.Sprintf("%s:stat:processed", resqueNamespace)).Result()
 	if err != nil {
 		return err
@@ -188,6 +210,7 @@ func (e *exporter) incrementFailures(ch chan<- prometheus.Metric) {
 
 func (e *exporter) notifyToCollect(ch chan<- prometheus.Metric) {
 	e.queueStatus.Collect(ch)
+	e.failedQueueStatus.Collect(ch)
 	e.processed.Collect(ch)
 	e.failedQueue.Collect(ch)
 	e.failedTotal.Collect(ch)
